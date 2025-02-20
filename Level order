@@ -1,0 +1,78 @@
+import java.util.*;
+public class Main{
+	class Node{
+  	int data;
+		Node left;
+		Node right;
+		Node(int data){
+    	this.data=data;
+			this.left=null;
+			this.right=null;
+    }}
+public Node insert(Node root,int data){
+	if(root==null){
+  	Node newnode=new Node(data);
+		root=newnode;
+		return root;
+  }
+	else if(data<root.data)
+		root.left=insert(root.left,data);
+	else if(data>root.data)
+		root.right=insert(root.right,data);
+	return root;
+}
+public void inorder(Node root){
+	if(root==null) return;
+	inorder(root.left);
+	System.out.print(root.data+" ");
+	inorder(root.right);
+}
+public void preorder(Node root){
+	if(root==null) return;
+	System.out.print(root.data+" ");
+	preorder(root.left);
+	preorder(root.right);
+}
+public void postorder(Node root){
+	if(root==null) return;
+	postorder(root.left);
+	postorder(root.right);
+	System.out.print(root.data+" ");
+}
+public int height(Node root){
+	if(root==null) return 0;
+	int l=height(root.left)+1;
+	int r=height(root.right)+1;
+	return Math.max(l,r);
+}
+public void levelorder(Node root){
+	int h=height(root);	
+	for(int i=1;i<=h;i++){
+		levelhelper(root,i);
+		System.out.println();
+}  //github.com/Anand-29
+}
+public void levelhelper(Node root,int l){
+	if(root==null) return;
+	else if(l==1) System.out.print(root.data+" ");
+	else{
+  	levelhelper(root.left,l-1);
+		levelhelper(root.right,l-1);
+  }
+}
+public static void main(String args[]){
+	Scanner sc=new Scanner(System.in);
+	Main ob=new Main();
+	Node root=null;
+	while(true){
+  	int a=sc.nextInt();
+		if(a==-1) break;
+		root=ob.insert(root,a);
+  }
+System.out.print("Inorder : ");ob.inorder(root);
+System.out.print("\nPreorder : ");ob.preorder(root);
+System.out.print("\nPostorder : ");ob.postorder(root);
+System.out.print("\nHeight : "+ob.height(root));
+System.out.print("\nLevelorder :\n");
+ob.levelorder(root);
+}}
